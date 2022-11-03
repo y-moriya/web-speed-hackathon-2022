@@ -53,17 +53,17 @@ export const TrimmedImage = ({ height, src, width }) => {
         { height: img.height, width: img.width },
       );
 
-      if (size.height == height) {
-        const cache = src.replace('.jpg', `_${height}.jpg`);
-        setDataUrl(cache);
-        return;
-      }
+      // if (size.height == height) {
+      //   const cache = src.replace('.jpg', `_${height}.jpg`);
+      //   setDataUrl(cache);
+      //   return;
+      // }
 
-      if (size.width == width) {
-        const cache = src.replace('.jpg', `_${width}.jpg`);
-        setDataUrl(cache);
-        return;
-      }
+      // if (size.width == width) {
+      //   const cache = src.replace('.jpg', `_${width}.jpg`);
+      //   setDataUrl(cache);
+      //   return;
+      // }
 
       const ctx = canvas.getContext("2d");
       ctx.drawImage(
