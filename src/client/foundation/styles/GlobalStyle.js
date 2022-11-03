@@ -28,6 +28,7 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: normal;
     font-display: block;
     src: url("/assets/fonts/MODI_Senobi-Gothic_2017_0702/Senobi-Gothic-Regular.ttf") format("truetype");
+    font-display: swap;
   }
 
   @font-face {
@@ -35,5 +36,6 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: bold;
     font-display: block;
     src: url("/assets/fonts/MODI_Senobi-Gothic_2017_0702/Senobi-Gothic-Bold.ttf") format("truetype");
+    font-display: swap;
   }
 `;
