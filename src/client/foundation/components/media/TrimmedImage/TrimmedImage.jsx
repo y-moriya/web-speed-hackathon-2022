@@ -42,7 +42,7 @@ export const TrimmedImage = ({ height, src, width }) => {
 
   useEffect(() => {
     const img = new Image();
-    img.src = src.replace('images', 'images/webp').replace('.jpg', '.webp');
+    img.src = src;
     img.onload = () => {
       const canvas = document.createElement("canvas");
       canvas.width = width;
@@ -52,18 +52,6 @@ export const TrimmedImage = ({ height, src, width }) => {
         { height: canvas.height, width: canvas.width },
         { height: img.height, width: img.width },
       );
-
-      // if (size.height == height) {
-      //   const cache = src.replace('.jpg', `_${height}.jpg`);
-      //   setDataUrl(cache);
-      //   return;
-      // }
-
-      // if (size.width == width) {
-      //   const cache = src.replace('.jpg', `_${width}.jpg`);
-      //   setDataUrl(cache);
-      //   return;
-      // }
 
       const ctx = canvas.getContext("2d");
       ctx.drawImage(
