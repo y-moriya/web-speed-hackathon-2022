@@ -5,9 +5,7 @@ import { defineConfig } from "vite"
 export default defineConfig({
   plugins: [
     react(),
-    viteCompression({
-      deleteOriginFile: true,
-    }),
+    viteCompression(),
   ],
   build: {
     outDir: "dist/public",
