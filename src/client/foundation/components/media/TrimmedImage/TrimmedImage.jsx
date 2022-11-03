@@ -65,5 +65,5 @@ export const TrimmedImage = ({ height, src, width }) => {
     };
   }, [height, src, width]);
 
-  return <img src={dataUrl} width={width} height={height} />;
+  return <img src={dataUrl} />;
 };
