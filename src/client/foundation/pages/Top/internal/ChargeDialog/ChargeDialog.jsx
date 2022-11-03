@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import React, { forwardRef, useCallback, useState } from "react";
-import zenginCode from "zengin-code";
+import React, { forwardRef, useCallback, useEffect, useState } from "react";
 
 import { Dialog } from "../../../../components/layouts/Dialog";
 import { Spacer } from "../../../../components/layouts/Spacer";
@@ -23,6 +22,29 @@ export const ChargeDialog = forwardRef(({ onComplete }, ref) => {
   const [branchCode, setBranchCode] = useState("");
   const [accountNo, setAccountNo] = useState("");
   const [amount, setAmount] = useState(0);
+  const [bankList, setBankList] = useState([]);
+  const [branchList, setBranchList] = useState([]);
+
+  useEffect( async () => {
+    fetch('/api/banklist')
+    .then(res => res.json())
+    .then(data => {setBankList(data.bankList)
+    });
+  },[]);
+
+  const useBankList = bankList.map(({ code, name }) => {
+    return <option key={code} value={code}>{`${name} (${code})`}</option>
+  });
+
+  useEffect(async () => {
+    fetch(`/api/bank/${bankCode}`)
+    .then(res => res.json())
+    .then(data => {setBranchList(data.branches)});
+  });
+
+  const useBranchList = branchList?.map(({ code, name }) => {
+    return <option key={code} value={code}>{name}</option>
+  });
 
   const clearForm = useCallback(() => {
     setBankCode("");
@@ -67,12 +89,8 @@ export const ChargeDialog = forwardRef(({ onComplete }, ref) => {
     [charge, bankCode, branchCode, accountNo, amount, onComplete, clearForm],
   );
 
-  const bankList = Object.entries(zenginCode).map(([code, { name }]) => ({
-    code,
-    name,
-  }));
-  const bank = zenginCode[bankCode];
-  const branch = bank?.branches[branchCode];
+  const bank = bankList?.find((bank) => bank.code == bankCode);
+  const branch = branchList?.find((branch) => branch.code == branchCode);
 
   return (
     <Dialog ref={ref} onClose={handleCloseDialog}>
@@ -92,9 +110,7 @@ export const ChargeDialog = forwardRef(({ onComplete }, ref) => {
             </label>
 
             <datalist id="ChargeDialog-bank-list">
-              {bankList.map(({ code, name }) => (
-                <option key={code} value={code}>{`${name} (${code})`}</option>
-              ))}
+              { useBankList }
             </datalist>
 
             {bank != null && (
@@ -113,12 +129,7 @@ export const ChargeDialog = forwardRef(({ onComplete }, ref) => {
             </label>
 
             <datalist id="ChargeDialog-branch-list">
-              {bank != null &&
-                Object.values(bank.branches).map((branch) => (
-                  <option key={branch.code} value={branch.code}>
-                    {branch.name}
-                  </option>
-                ))}
+              { useBranchList }
             </datalist>
 
             {branch && (
