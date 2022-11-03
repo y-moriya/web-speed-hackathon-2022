@@ -40,6 +40,13 @@ server.addHook("onRequest", async (req, res) => {
 server.addHook("onRequest", async (req, res) => {
   res.header("Cache-Control", "no-cache, no-store, no-transform");
   res.header("Connection", "close");
+  if (req.url.endsWith('.js')) {
+    res.redirect(req.url.replace('.js', '.js.br'));
+  }
+  if (req.url.endsWith('.br')) {
+    res.header("Content-Type", "application/javascript");
+    res.header("Content-Encoding", "br");
+  }
 });
 
 server.register(apiRoute, { prefix: "/api" });

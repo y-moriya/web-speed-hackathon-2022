@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [
     react(),
     viteCompression(),
+    viteCompression({ algorithm: "brotliCompress", ext: ".br" })
   ],
   build: {
     outDir: "dist/public",
