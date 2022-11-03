@@ -37,6 +37,7 @@ export const ChargeDialog = forwardRef(({ onComplete }, ref) => {
   });
 
   useEffect(async () => {
+    if (!bankCode) return;
     fetch(`/api/bank/${bankCode}`)
     .then(res => res.json())
     .then(data => {setBranchList(data.branches)});

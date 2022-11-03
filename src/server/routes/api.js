@@ -177,8 +177,9 @@ export const apiRoute = async (fastify) => {
 
   fastify.get("/bank/:bankCode", async (req, res) => {
     const bank = zenginCode[req.params.bankCode];
-    if (!bank) {
+    if (!bank || !bank.branches) {
       res.send([]);
+      return;
     }
     const branches = Object.entries(bank.branches).map(([code, { name }]) => ({
       code,
